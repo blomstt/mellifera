@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Checks for src/Doc.cs: a plain console app, no test framework.
+       Run: dotnet run, with project tests/DocTests (exits 1 if any check fails). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Hive</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../../src/Doc.cs" Link="src/Doc.cs" />
+    <Compile Include="../../src/Text.cs" Link="src/Text.cs" />
+  </ItemGroup>
+
+</Project>

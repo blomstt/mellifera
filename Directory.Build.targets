@@ -1,0 +1,19 @@
+<Project>
+
+  <!-- The product's version (<Version> in hive.csproj) as a constant,
+       Hive.Product.Version, for the MCP server's serverInfo. Reading it from
+       the assembly's attributes at run time adds about 250 KB of reflection
+       to the native binary. Applies to the test projects too. -->
+  <Target Name="WriteProductVersion" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <ProductVersionFile>$(IntermediateOutputPath)ProductVersion.g.cs</ProductVersionFile>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ProductVersionFile)" Overwrite="true" WriteOnlyWhenDifferent="true"
+                      Lines="namespace Hive%3B static class Product { public const string Version = &quot;$(Version)&quot;%3B }" />
+    <ItemGroup>
+      <Compile Include="$(ProductVersionFile)" />
+      <FileWrites Include="$(ProductVersionFile)" />
+    </ItemGroup>
+  </Target>
+
+</Project>

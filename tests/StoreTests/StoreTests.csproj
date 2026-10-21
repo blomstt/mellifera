@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Checks for the Store and the rest of src/ that run without GTK: a plain
+       console app, no test framework. It compiles all of src/ except
+       Program.cs (the CLI's entry point).
+       Run: dotnet run, with project tests/StoreTests (exits 1 if any check fails). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>Hive</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- The product's version, read from hive.csproj, so code that asks the
+         assembly for it (the MCP server's serverInfo) gets the same here. -->
+    <Version>$([System.Text.RegularExpressions.Regex]::Match($([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory)../../hive.csproj')), '(?&lt;=&lt;Version&gt;)[^&lt;]+'))</Version>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../../src/**/*.cs" Exclude="../../src/Program.cs" LinkBase="src" />
+  </ItemGroup>
+
+</Project>

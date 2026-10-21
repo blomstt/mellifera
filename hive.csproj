@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>hive</AssemblyName>
+    <RootNamespace>Hive</RootNamespace>
+    <Product>Mellifera</Product>
+    <Version>0.2.0</Version>
+
+    <!-- One small native binary, nothing it doesn't use. -->
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <OptimizationPreference>Size</OptimizationPreference>
+    <StackTraceSupport>false</StackTraceSupport>
+    <EventSourceSupport>false</EventSourceSupport>
+    <DebuggerSupport>false</DebuggerSupport>
+    <StripSymbols>true</StripSymbols>
+  </PropertyGroup>
+
+  <!-- The GC sizes its gen0 budget from the L3 cache (tens of MB on big
+       caches), and a long-running `hive mcp` grows to that before collecting.
+       Capped at 4 MB, it stays near 13 MB at the same speed. Compiled into
+       the binary; the value is decimal bytes (a 0x value is ignored). -->
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.GC.Gen0MaxBudget" Value="4194304" />
+  </ItemGroup>
+
+  <!-- The tests are their own projects (tests/DocTests, tests/StoreTests,
+       tests/WindowTests), run by tests/run.sh. -->
+  <ItemGroup>
+    <Compile Remove="tests/**" />
+    <None Remove="tests/**" />
+  </ItemGroup>
+
+</Project>
